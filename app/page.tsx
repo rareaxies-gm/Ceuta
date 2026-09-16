@@ -16,8 +16,8 @@ type Tweet = {
   tweetUrl: string;
 };
 
-type TierKey = "A" | "B" | "C" | "D" | "E" | "DISCARD";
-type VisibleTier = "A" | "B" | "C" | "D" | "E";
+type TierKey = "S" | "A" | "B" | "C" | "D" | "E" | "DISCARD";
+type VisibleTier = "S" | "A" | "B" | "C" | "D" | "E";
 
 const TWEETS: Tweet[] = [
   {
@@ -362,6 +362,68 @@ const TWEETS: Tweet[] = [
       "https://pbs.twimg.com/profile_images/2015038970405572608/lbcRtHrS_400x400.jpg",
     tweetUrl: "https://x.com/RareRestore/status/2090742433881391423",
   },
+  {
+    id: "2099972017336287459",
+    author: "Rafael Sereti",
+    handle: "@RafaelSereti",
+    content: "Mbappé and Vinicius hide the slogan",
+    likes: 245,
+    reposts: 64,
+    views: 3500000,
+    avatarUrl:
+      "https://pbs.twimg.com/profile_images/1977790841419706368/Nar2RLAi_400x400.jpg",
+    tweetUrl: "https://x.com/RafaelSereti/status/2099972017336287459",
+  },
+  {
+    id: "2099946507692646611",
+    author: "GxdCabrxn",
+    handle: "@GxdCabron",
+    content: "Vinicius telling Mbappé how to put on his jersey..",
+    likes: 8100,
+    reposts: 1100,
+    views: 3300000,
+    avatarUrl:
+      "https://pbs.twimg.com/profile_images/2100029083329363969/hV6mXOBF_400x400.jpg",
+    tweetUrl: "https://x.com/GxdCabron/status/2099946507692646611",
+  },
+  {
+    id: "2099947808300081342",
+    author: "•",
+    handle: "@yipikayei7",
+    content: "Two ungrateful pricks.",
+    likes: 31000,
+    reposts: 4800,
+    views: 1800000,
+    avatarUrl:
+      "https://pbs.twimg.com/profile_images/2056455424442761216/in4gnaSe_400x400.jpg",
+    tweetUrl: "https://x.com/yipikayei7/status/2099947808300081342",
+  },
+  {
+    id: "2099955156443951360",
+    author: "Pablø",
+    handle: "@pablonost",
+    content:
+      "As a Madridista, I earnestly ask the Atlético de Madrid fans to whistle at these two shameless scoundrels every time they touch the ball on Sunday.",
+    likes: 28000,
+    reposts: 3400,
+    views: 1000000,
+    avatarUrl:
+      "https://pbs.twimg.com/profile_images/2085712565397581824/OKUlzn8U_400x400.jpg",
+    tweetUrl: "https://x.com/pablonost/status/2099955156443951360",
+  },
+  {
+    id: "2099945254505845041",
+    author: "Laliga News",
+    handle: "@laligaa_neews",
+    content:
+      "Kylian Mbappé and Vinicius Junior the only players not wearing the shirt in support of Ceuta.",
+    likes: 1500,
+    reposts: 388,
+    views: 852000,
+    avatarUrl:
+      "https://pbs.twimg.com/profile_images/2013546454321664000/ZGVUyS4T_400x400.jpg",
+    tweetUrl: "https://x.com/laligaa_neews/status/2099945254505845041",
+  },
 ];
 
 const byId = Object.fromEntries(TWEETS.map((t) => [t.id, t]));
@@ -370,10 +432,17 @@ function pick(ids: string[]): Tweet[] {
   return ids.map((id) => byId[id]).filter(Boolean);
 }
 
-const VISIBLE_TIERS: VisibleTier[] = ["A", "B", "C", "D", "E"];
+const VISIBLE_TIERS: VisibleTier[] = ["S", "A", "B", "C", "D", "E"];
 const ALL_TIERS: TierKey[] = [...VISIBLE_TIERS, "DISCARD"];
 
 const DEFAULT_TIER_LISTS: Record<TierKey, Tweet[]> = {
+  S: pick([
+    "2099972017336287459",
+    "2099946507692646611",
+    "2099947808300081342",
+    "2099955156443951360",
+    "2099945254505845041",
+  ]),
   A: pick([
     "2083621662956634208",
     "2083620227850371536",
@@ -416,6 +485,7 @@ const DEFAULT_TIER_LISTS: Record<TierKey, Tweet[]> = {
 };
 
 const DEFAULT_TITLES: Record<TierKey, string> = {
+  S: "African Footballers Stand with Rapists",
   A: "Spanish Patriots",
   B: "Not An Invasion",
   C: "Criminality",
@@ -425,6 +495,7 @@ const DEFAULT_TITLES: Record<TierKey, string> = {
 };
 
 const TIER_CLASSES: Record<TierKey, string> = {
+  S: "bg-red-950/40 border-red-600",
   A: "bg-orange-950/40 border-orange-500",
   B: "bg-yellow-950/30 border-yellow-500",
   C: "bg-green-950/30 border-green-500",
@@ -434,6 +505,7 @@ const TIER_CLASSES: Record<TierKey, string> = {
 };
 
 const TIER_COLORS: Record<TierKey, string> = {
+  S: "#dc2626",
   A: "#f97316",
   B: "#eab308",
   C: "#22c55e",
@@ -442,7 +514,7 @@ const TIER_COLORS: Record<TierKey, string> = {
   DISCARD: "#6b7280",
 };
 
-const LIVE_URL = "https://ceuta.vercel.app/";
+const LIVE_URL = "https://ceuta-madness.vercel.app/";
 const DEFAULT_PROFILE =
   "https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png";
 
@@ -474,6 +546,7 @@ function decodeState(raw: string): {
   try {
     const parsed = JSON.parse(decodeURIComponent(escape(atob(raw))));
     const tierLists: Record<TierKey, Tweet[]> = {
+      S: [],
       A: [],
       B: [],
       C: [],
