@@ -1009,7 +1009,7 @@ function TierBoard() {
             ))}
           </div>
           <div className="text-center mt-10 text-gray-500 text-sm space-y-1">
-            <div>Make your own → ceuta.vercel.app</div>
+            <div>Make your own → ceuta-madness.vercel.app</div>
             <div>Questions — DM @RareRestore on X</div>
           </div>
         </div>
